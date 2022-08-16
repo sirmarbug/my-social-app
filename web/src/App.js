@@ -1,23 +1,24 @@
-import {useState} from "react";
-import Button from '@mui/material/Button';
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import NotFound from "./pages/NotFound";
+import PostDetails from "./pages/Dashboard/PostDetails";
+import MyPosts from "./pages/Dashboard/MyPosts";
+import Home from "./pages/Dashboard/Home";
 
 function App() {
-  const [counter, setCounter] = useState(0)
-
-  const increment = () => {
-    setCounter(counter + 1)
-  }
-
-  const decrement = () => {
-    setCounter(counter - 1)
-  }
-
   return (
-    <div className="App">
-      {counter}
-      <Button onClick={increment}>+</Button>
-      <Button onClick={decrement}>-</Button>
-    </div>
+      <BrowserRouter>
+          <Switch>
+              <Route exact path="/" component={Login}/>
+              <Route path="/register" component={Register}/>
+              <Route path="/dashboard" component={Register}/>
+              <Route path="/posts" component={Home}/>
+              <Route path="/my-posts" component={MyPosts}/>
+              <Route path="/posts/:id" component={PostDetails}/>
+              <Route path="*" component={NotFound}/>
+          </Switch>
+      </BrowserRouter>
   );
 }
 
