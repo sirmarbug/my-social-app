@@ -12,7 +12,6 @@ function App() {
           <Switch>
               <Route exact path="/" component={Login}/>
               <Route path="/register" component={Register}/>
-              <Route path="/dashboard" component={Register}/>
               <Route path="/posts" component={Home}/>
               <Route path="/my-posts" component={MyPosts}/>
               <Route path="/posts/:id" component={PostDetails}/>
