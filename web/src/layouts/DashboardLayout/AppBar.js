@@ -1,6 +1,17 @@
-import {Avatar, Box, Divider, IconButton, Menu, MenuItem, Toolbar, Typography, Button, AppBar} from "@mui/material";
+import {
+    Avatar,
+    Box,
+    Divider,
+    IconButton,
+    Menu,
+    MenuItem,
+    Toolbar,
+    Typography,
+    AppBar,
+} from "@mui/material";
 import {useState} from "react";
 import {useHistory} from "react-router-dom";
+import AddNewPostDialog from "../../components/dialogs/AddNewPostDialog";
 
 const MyAppBar = () => {
     const history = useHistory()
@@ -36,7 +47,7 @@ const MyAppBar = () => {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={dashboardPage}>
                     MySocialApp
                 </Typography>
-                <Button color="inherit" sx={{ mr: 2 }}>+</Button>
+                <AddNewPostDialog/>
                 <Box sx={{ flexGrow: 0 }}>
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt="user" />

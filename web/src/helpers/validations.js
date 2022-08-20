@@ -22,3 +22,10 @@ export const registerValidationSchema = new Yup.ObjectSchema({
         .required('Hasło jest wymagane')
         .oneOf([Yup.ref('password'), null], 'Hasła muszą być takie same')
 })
+
+export const newPostValidation = new Yup.ObjectSchema({
+    text: Yup.string()
+        .required('Treść posta jest wymagana')
+        .min(3, 'Minimum musisz podać 3 znaki')
+        .max(140, 'Maksimum możesz podać 140 znaków')
+})
