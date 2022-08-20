@@ -1,8 +1,10 @@
+import DashboardLayout from "../../layouts/DashboardLayout";
+
 const MyDetails = () => {
     return (
-        <div>
-            <h1>MyDetails</h1>
-        </div>
+        <DashboardLayout>
+            <h1>My Posts</h1>
+        </DashboardLayout>
     )
 }
 
