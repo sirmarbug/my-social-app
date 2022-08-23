@@ -8,7 +8,7 @@ const DashboardLayout = (props) => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar/>
-            <Container maxWidth="md">
+            <Container maxWidth="md" sx={{ padding: '1rem' }}>
                 { props.children }
             </Container>
         </Box>

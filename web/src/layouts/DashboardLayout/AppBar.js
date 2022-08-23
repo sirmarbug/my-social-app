@@ -7,14 +7,29 @@ import {
     MenuItem,
     Toolbar,
     Typography,
-    AppBar,
+    AppBar, Button,
 } from "@mui/material";
 import {useState} from "react";
 import {useHistory} from "react-router-dom";
-import AddNewPostDialog from "../../components/dialogs/AddNewPostDialog";
+import SavePostDialog from "../../components/dialogs/SavePostDialog";
 
 const MyAppBar = () => {
     const history = useHistory()
+
+    const [openAddPostDialog, setOpenAddPostDialog] = useState(false)
+
+    const openAddPostDialogHandle = () => {
+        setOpenAddPostDialog(true)
+    }
+
+    const closeAddPostDialogHandle = () => {
+        setOpenAddPostDialog(false)
+    }
+
+    const submitAddPostDialogHandle = () => {
+        setOpenAddPostDialog(false)
+        console.log('submitAddPostDialogHandle')
+    }
 
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -47,7 +62,12 @@ const MyAppBar = () => {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={dashboardPage}>
                     MySocialApp
                 </Typography>
-                <AddNewPostDialog/>
+                <Button color="inherit" sx={{ mr: 2 }} onClick={openAddPostDialogHandle}>+</Button>
+                <SavePostDialog
+                    open={openAddPostDialog}
+                    onClose={closeAddPostDialogHandle}
+                    onSubmit={submitAddPostDialogHandle}
+                />
                 <Box sx={{ flexGrow: 0 }}>
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt="user" />

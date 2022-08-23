@@ -1,40 +1,37 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, styled, TextField} from "@mui/material";
-import {useState} from "react";
 import {useFormik} from "formik";
 import {newPostValidation} from "../../helpers/validations";
+import {useEffect} from "react";
 
 const Form = styled("form")(() => ({
     width: '100%'
 }))
 
-const AddNewPostDialog = () => {
-    const [openAddPostDialog, setOpenAddPostDialog] = useState(false)
+const SavePostDialog = (props) => {
+    const { open, onClose, onSubmit, post } = props
 
-    const openAddPostDialogHandle = () => {
-        setOpenAddPostDialog(true)
-    }
-
-    const closeAddPostDialogHandle = () => {
-        setOpenAddPostDialog(false)
-    }
+    useEffect(() => {
+        console.log('crerated', post)
+    }, [post])
 
     const submit = (values) => {
         console.log(JSON.stringify(values))
+        onSubmit()
     }
 
     const formik = useFormik({
         initialValues: {
-            text: ''
+            text: post ? post.text : ''
         },
         validationSchema: newPostValidation,
-        onSubmit: submit
+        onSubmit: submit,
+        enableReinitialize: true
     })
 
     return (
         <>
-            <Button color="inherit" sx={{ mr: 2 }} onClick={openAddPostDialogHandle}>+</Button>
-            <Dialog open={openAddPostDialog} fullWidth maxWidth="md" onClose={closeAddPostDialogHandle}>
-                <DialogTitle>Dodaj nowy post</DialogTitle>
+            <Dialog open={open} fullWidth maxWidth="md" onClose={onClose}>
+                <DialogTitle>{post ? 'Edytuj post' : 'Dodaj nowy post'}</DialogTitle>
                 <Form onSubmit={formik.handleSubmit}>
                     <DialogContent>
                         <TextField
@@ -53,7 +50,7 @@ const AddNewPostDialog = () => {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button type="submit" onClick={closeAddPostDialogHandle}>Dodaj</Button>
+                        <Button type="submit">{post ? 'Edytuj' : 'Dodaj'}</Button>
                     </DialogActions>
                 </Form>
             </Dialog>
@@ -61,4 +58,4 @@ const AddNewPostDialog = () => {
     )
 }
 
-export default AddNewPostDialog
+export default SavePostDialog
