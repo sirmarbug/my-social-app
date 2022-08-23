@@ -1,9 +1,14 @@
 import DashboardLayout from "../../layouts/DashboardLayout";
+import PostCard from "../../components/PostCard";
 
 const MyDetails = () => {
     return (
         <DashboardLayout>
-            <h1>My Posts</h1>
+            <h1>Moje posty</h1>
+            <PostCard/>
+            <PostCard/>
+            <PostCard/>
+            <PostCard/>
         </DashboardLayout>
     )
 }
