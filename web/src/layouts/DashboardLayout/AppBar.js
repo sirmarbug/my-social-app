@@ -70,7 +70,7 @@ const MyAppBar = () => {
                 />
                 <Box sx={{ flexGrow: 0 }}>
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt="user" />
+                        <Avatar alt="user">MB</Avatar>
                     </IconButton>
                     <Menu
                         sx={{ mt: '45px' }}
