@@ -1,10 +1,12 @@
 const { objectIdIsValid } = require("../utils/validations")
 const Post = require("../models/post")
+const Like = require("../models/like")
 
 const getAll = async (req, res) => {
     try {
+        const likes = await Like.find({ userId: req.user.userId }).lean()
         const posts = await Post.find().lean()
-        const result = posts.map(p => ({ ...p, like: false }))
+        const result = posts.map(p => ({ ...p, like: !!likes.find(l => l.postId === p._id.toString()) }))
 
         return res.status(200).json({
             items: result,
