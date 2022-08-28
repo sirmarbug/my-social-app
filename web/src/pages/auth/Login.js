@@ -19,7 +19,7 @@ const Login = () => {
             localStorage.setItem('token', data.token)
             history.push('/posts')
         } catch (e) {
-
+            console.error(e)
         }
     }
 
