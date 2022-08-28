@@ -4,6 +4,7 @@ import AuthLayout from "../../layouts/AuthLayout";
 import {useHistory} from "react-router-dom";
 import {useFormik} from "formik";
 import {registerValidationSchema} from "../../helpers/validations";
+import {register} from "../../api/auth";
 
 const Form = styled("form")(() => ({
     width: '100%'
@@ -12,9 +13,13 @@ const Form = styled("form")(() => ({
 const Register = () => {
     const history = useHistory()
 
-    const submit = (values) => {
-        console.log(JSON.stringify(values))
-        history.push('/')
+    const submit = async (values) => {
+        try {
+            await register(values)
+            history.push('/')
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     const formik = useFormik({
