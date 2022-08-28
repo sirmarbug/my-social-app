@@ -4,6 +4,7 @@ import AuthLayout from "../../layouts/AuthLayout";
 import {TextField, Typography, Box, styled} from "@mui/material";
 import {useFormik} from "formik";
 import {loginValidationSchema} from "../../helpers/validations";
+import {login} from "../../api/auth";
 
 const Form = styled("form")(() => ({
     width: '100%'
@@ -12,19 +13,14 @@ const Form = styled("form")(() => ({
 const Login = () => {
     const history = useHistory()
 
-    // const [counter, setCounter] = useState(0)
-    //
-    // const increment = () => {
-    //     setCounter(counter + 1)
-    // }
-    //
-    // const decrement = () => {
-    //     setCounter(counter - 1)
-    // }
+    const submit = async (values) => {
+        try {
+            const { data }  = await login(values)
+            localStorage.setItem('token', data.token)
+            history.push('/posts')
+        } catch (e) {
 
-    const submit = (values) => {
-        console.log(JSON.stringify(values))
-        history.push('/posts')
+        }
     }
 
     const formik = useFormik({
@@ -67,6 +63,7 @@ const Login = () => {
                         variant="standard"
                         fullWidth
                         name="password"
+                        type="password"
                         value={formik.values.password}
                         onChange={formik.handleChange}
                         error={formik.touched.password && Boolean(formik.errors.password)}
