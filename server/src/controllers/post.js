@@ -6,7 +6,9 @@ const getAll = async (req, res) => {
     try {
         const likes = await Like.find({ userId: req.user.userId }).lean()
         const posts = await Post.find().lean()
-        const result = posts.map(p => ({ ...p, like: !!likes.find(l => l.postId === p._id.toString()) }))
+        const result = posts
+            .map(p => ({ ...p, like: !!likes.find(l => l.postId === p._id.toString()) }))
+            .reverse()
 
         return res.status(200).json({
             items: result,
@@ -19,11 +21,12 @@ const getAll = async (req, res) => {
 
 const my = async (req, res) => {
     try {
-        const posts = await Post.find({ userId: req.user.userId })
+        const posts = await Post.find({ userId: req.user.userId }).lean()
+        const result = posts.reverse()
 
         return res.status(200).json({
-            items: posts,
-            total: posts.length
+            items: result,
+            total: result.length
         })
     } catch (e) {
         return res.status(500).json(e)
