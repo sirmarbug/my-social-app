@@ -2,7 +2,7 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import PostCard from "../../components/PostCard";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchPosts, resetItems, selectPosts, selectPostsLoading} from "../../store/postsSlice";
+import {fetchAllPosts, resetItems, selectPosts, selectPostsLoading} from "../../store/postsSlice";
 import {Box, CircularProgress} from "@mui/material";
 
 const Home = () => {
@@ -11,7 +11,7 @@ const Home = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchPosts())
+        dispatch(fetchAllPosts())
 
         return () => {
             dispatch(resetItems())

@@ -1,15 +1,23 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {getPosts} from "../api/post";
+import {getMyPosts, getPosts} from "../api/post";
 
 const initialState = {
     loading: true,
     list: null
 }
 
-export const fetchPosts = createAsyncThunk(
-    'posts/fetchPosts',
+export const fetchAllPosts = createAsyncThunk(
+    'posts/fetchAllPosts',
     async () => {
         const { data } = await getPosts()
+        return data
+    }
+)
+
+export const fetchMyPosts = createAsyncThunk(
+    'posts/fetchMyPosts',
+    async () => {
+        const { data } = await getMyPosts()
         return data
     }
 )
@@ -24,14 +32,24 @@ const postsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchPosts.pending, state => {
+            .addCase(fetchAllPosts.pending, state => {
                 state.loading = true
             })
-            .addCase(fetchPosts.fulfilled, (state, action) => {
+            .addCase(fetchAllPosts.fulfilled, (state, action) => {
                 state.list = action.payload
                 state.loading = false
             })
-            .addCase(fetchPosts.rejected, state => {
+            .addCase(fetchAllPosts.rejected, state => {
+                state.loading = false
+            })
+            .addCase(fetchMyPosts.pending, state => {
+                state.loading = true
+            })
+            .addCase(fetchMyPosts.fulfilled, (state, action) => {
+                state.list = action.payload
+                state.loading = false
+            })
+            .addCase(fetchMyPosts.rejected, state => {
                 state.loading = false
             })
     }
