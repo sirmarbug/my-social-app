@@ -12,6 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ConfirmDialog from "./dialogs/ConfirmDialog";
 import {useState} from "react";
 import SavePostDialog from "./dialogs/SavePostDialog";
+import moment from "moment";
 
 const PostCard = ({ post }) => {
     const [deletePostConfirmDialog, setDeletePostConfirmDialog] = useState(false)
@@ -42,16 +43,20 @@ const PostCard = ({ post }) => {
         setOpenEditPostDialog(false)
     }
 
+    const author = `${post.author.firstName} ${post.author.lastName}`
+    const initials = `${post.author.firstName.charAt(0)}${post.author.lastName.charAt(0)}`
+    const createdAt = moment(post.date).format('DD.MM.YYYY')
+
     return (
         <Card sx={{ maxWidth: '100%', marginBottom: '3rem' }}>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: blue[500], fontSize: '1rem' }} aria-label="recipe" sizes="">
-                        MB
+                        {initials}
                     </Avatar>
                 }
-                title="Mariusz Bugajski"
-                subheader="21.08.2022"
+                title={author}
+                subheader={createdAt}
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
@@ -81,7 +86,7 @@ const PostCard = ({ post }) => {
             <SavePostDialog
                 open={openEditPostDialog}
                 post={{
-                    id: '',
+                    id: post._id,
                     text: post.text
                 }}
                 onClose={closeEditPostDialogHandle}
