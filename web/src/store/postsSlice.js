@@ -32,6 +32,10 @@ const postsSlice = createSlice({
         addNewPost: (state, action) => {
             state.list.items.unshift(action.payload)
             state.list.total += 1
+        },
+        removePost: (state, action) => {
+            state.list.items = state.list.items.filter(p => p._id !== action.payload)
+            state.list.total -= 1
         }
     },
     extraReducers: (builder) => {
@@ -59,7 +63,7 @@ const postsSlice = createSlice({
     }
 })
 
-export const { resetItems, addNewPost } = postsSlice.actions
+export const { resetItems, addNewPost, removePost } = postsSlice.actions
 
 export const selectPostsLoading = state => state.posts.loading
 export const selectPosts = state => state.posts.list

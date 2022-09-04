@@ -13,8 +13,12 @@ import ConfirmDialog from "./dialogs/ConfirmDialog";
 import {useState} from "react";
 import SavePostDialog from "./dialogs/SavePostDialog";
 import moment from "moment";
+import {removePostApi} from "../api/post";
+import {useDispatch} from "react-redux";
+import {removePost} from "../store/postsSlice";
 
 const PostCard = ({ post }) => {
+    const dispatch = useDispatch()
     const [deletePostConfirmDialog, setDeletePostConfirmDialog] = useState(false)
 
     const openDeleteConfirmDialog = () => {
@@ -25,7 +29,9 @@ const PostCard = ({ post }) => {
         setDeletePostConfirmDialog(false)
     }
 
-    const confirmDeleteConfirmDialog = () => {
+    const confirmDeleteConfirmDialog = async () => {
+        await removePostApi(post._id)
+        dispatch(removePost(post._id))
         setDeletePostConfirmDialog(false)
     }
 
