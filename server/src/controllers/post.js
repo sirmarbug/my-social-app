@@ -46,7 +46,7 @@ const create = async (req, res) => {
             })
         }
 
-        await Post.create({
+        const post = await Post.create({
             userId: userId,
             author: {
                 firstName,
@@ -55,7 +55,7 @@ const create = async (req, res) => {
             text
         })
 
-        return res.status(201).send()
+        return res.status(201).json(post)
     } catch (e) {
         return res.status(500).json(e)
     }
