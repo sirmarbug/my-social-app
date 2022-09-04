@@ -13,12 +13,15 @@ import ConfirmDialog from "./dialogs/ConfirmDialog";
 import {useState} from "react";
 import SavePostDialog from "./dialogs/SavePostDialog";
 import moment from "moment";
-import {removePostApi} from "../api/post";
+import {removePostApi, updatePost} from "../api/post";
 import {useDispatch} from "react-redux";
-import {removePost} from "../store/postsSlice";
+import {fetchAllPosts, fetchMyPosts, removePost} from "../store/postsSlice";
+import {useLocation} from "react-router-dom";
 
 const PostCard = ({ post }) => {
     const dispatch = useDispatch()
+    const location = useLocation()
+
     const [deletePostConfirmDialog, setDeletePostConfirmDialog] = useState(false)
 
     const openDeleteConfirmDialog = () => {
@@ -45,7 +48,13 @@ const PostCard = ({ post }) => {
         setOpenEditPostDialog(false)
     }
 
-    const confirmEditPostDialogHandle = () => {
+    const confirmEditPostDialogHandle = async (values) => {
+        await updatePost(post._id, values)
+        if (location.pathname === '/posts') {
+            dispatch(fetchAllPosts())
+        } else {
+            dispatch(fetchMyPosts())
+        }
         setOpenEditPostDialog(false)
     }
 
