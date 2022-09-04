@@ -13,9 +13,9 @@ const SavePostDialog = (props) => {
     useEffect(() => {
     }, [post])
 
-    const submit = (values) => {
-        console.log(JSON.stringify(values))
-        onSubmit(values)
+    const submit = async (values) => {
+        await onSubmit(values)
+        formik.resetForm()
     }
 
     const formik = useFormik({

@@ -15,6 +15,7 @@ import SavePostDialog from "../../components/dialogs/SavePostDialog";
 import {useDispatch, useSelector} from "react-redux";
 import {resetUser, selectCurrentUser, setUser} from "../../store/currentUserSlice";
 import {createPost} from "../../api/post";
+import {addNewPost} from "../../store/postsSlice";
 
 const MyAppBar = () => {
     const history = useHistory()
@@ -30,7 +31,8 @@ const MyAppBar = () => {
     }
 
     const submitAddPostDialogHandle = async (data) => {
-        await createPost(data)
+        const { data: response } = await createPost(data)
+        dispatch(addNewPost(response))
         setOpenAddPostDialog(false)
     }
 
