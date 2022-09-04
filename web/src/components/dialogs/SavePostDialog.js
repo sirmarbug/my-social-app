@@ -11,12 +11,11 @@ const SavePostDialog = (props) => {
     const { open, onClose, onSubmit, post } = props
 
     useEffect(() => {
-        console.log('crerated', post)
     }, [post])
 
     const submit = (values) => {
         console.log(JSON.stringify(values))
-        onSubmit()
+        onSubmit(values)
     }
 
     const formik = useFormik({

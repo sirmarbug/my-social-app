@@ -13,7 +13,7 @@ import ConfirmDialog from "./dialogs/ConfirmDialog";
 import {useState} from "react";
 import SavePostDialog from "./dialogs/SavePostDialog";
 
-const PostCard = () => {
+const PostCard = ({ post }) => {
     const [deletePostConfirmDialog, setDeletePostConfirmDialog] = useState(false)
 
     const openDeleteConfirmDialog = () => {
@@ -26,7 +26,6 @@ const PostCard = () => {
 
     const confirmDeleteConfirmDialog = () => {
         setDeletePostConfirmDialog(false)
-        console.log('confirmDeleteConfirmDialog')
     }
 
     const [openEditPostDialog, setOpenEditPostDialog] = useState(false)
@@ -41,7 +40,6 @@ const PostCard = () => {
 
     const confirmEditPostDialogHandle = () => {
         setOpenEditPostDialog(false)
-        console.log('confirmEditPostDialogHandle')
     }
 
     return (
@@ -57,9 +55,7 @@ const PostCard = () => {
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the mussels,
-                    if you like.
+                    { post.text }
                 </Typography>
             </CardContent>
             <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -86,7 +82,7 @@ const PostCard = () => {
                 open={openEditPostDialog}
                 post={{
                     id: '',
-                    text: 'This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.'
+                    text: post.text
                 }}
                 onClose={closeEditPostDialogHandle}
                 onSubmit={confirmEditPostDialogHandle}

@@ -14,6 +14,7 @@ import {useHistory} from "react-router-dom";
 import SavePostDialog from "../../components/dialogs/SavePostDialog";
 import {useDispatch, useSelector} from "react-redux";
 import {resetUser, selectCurrentUser, setUser} from "../../store/currentUserSlice";
+import {createPost} from "../../api/post";
 
 const MyAppBar = () => {
     const history = useHistory()
@@ -28,9 +29,9 @@ const MyAppBar = () => {
         setOpenAddPostDialog(false)
     }
 
-    const submitAddPostDialogHandle = () => {
+    const submitAddPostDialogHandle = async (data) => {
+        await createPost(data)
         setOpenAddPostDialog(false)
-        console.log('submitAddPostDialogHandle')
     }
 
     const [anchorElUser, setAnchorElUser] = useState(null);
