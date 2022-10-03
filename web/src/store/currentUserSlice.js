@@ -18,9 +18,7 @@ const currentUserSlice = createSlice({
     initialState,
     reducers: {
         resetUser: state => {
-            state.currentUser.firstName = null
-            state.currentUser.lastName = null
-            state.currentUser.email = null
+            state.currentUser = {}
         }
     },
     extraReducers: (builder) => {
