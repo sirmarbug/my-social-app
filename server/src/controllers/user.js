@@ -13,9 +13,14 @@ const current = async (req, res) => {
             })
         }
 
-        const recommend = await User.findOne({ _id: userId })
+        const user = await User.findOne({ _id: userId })
 
-        return res.status(200).json(recommend)
+        return res.status(200).json({
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email
+        })
     } catch (e) {
         return res.status(500).json(e)
     }
