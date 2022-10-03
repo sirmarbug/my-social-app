@@ -13,7 +13,7 @@ import {useState} from "react";
 import {useHistory} from "react-router-dom";
 import SavePostDialog from "../../components/dialogs/SavePostDialog";
 import {useDispatch, useSelector} from "react-redux";
-import {resetUser, selectCurrentUser, setUser} from "../../store/currentUserSlice";
+import {selectCurrentUser} from "../../store/currentUserSlice";
 import {createPost} from "../../api/post";
 import {addNewPost} from "../../store/postsSlice";
 
@@ -59,17 +59,11 @@ const MyAppBar = () => {
         history.push('/')
     }
 
-    const currentUser = useSelector(selectCurrentUser)
-
     const dispatch = useDispatch()
 
-    const setUserHandle = () => {
-        dispatch(setUser())
-    }
+    const currentUser = useSelector(selectCurrentUser)
 
-    const resetUserHandle = () => {
-        dispatch(resetUser())
-    }
+    const initials = `${currentUser.firstName?.charAt(0)}${currentUser.lastName?.charAt(0)}`
 
     return (
         <AppBar
@@ -79,11 +73,6 @@ const MyAppBar = () => {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={dashboardPage}>
                     MySocialApp
                 </Typography>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }}>
-                    { currentUser.firstName } { currentUser.lastName }
-                </Typography>
-                <Button color="inherit" sx={{ mr: 2 }} onClick={setUserHandle}>SET</Button>
-                <Button color="inherit" sx={{ mr: 2 }} onClick={resetUserHandle}>RESET</Button>
                 <Button color="inherit" sx={{ mr: 2 }} onClick={openAddPostDialogHandle}>+</Button>
                 <SavePostDialog
                     open={openAddPostDialog}
@@ -92,7 +81,7 @@ const MyAppBar = () => {
                 />
                 <Box sx={{ flexGrow: 0 }}>
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt="user">MB</Avatar>
+                        <Avatar alt="user">{initials}</Avatar>
                     </IconButton>
                     <Menu
                         sx={{ mt: '45px' }}
