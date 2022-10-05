@@ -32,6 +32,7 @@ const currentUserSlice = createSlice({
 export const { setUser, resetUser } = currentUserSlice.actions
 
 export const selectCurrentUser = state => ({
+    _id: state.currentUser.currentUser._id || null,
     firstName: state.currentUser.currentUser.firstName || null,
     lastName: state.currentUser.currentUser.lastName || null,
     email: state.currentUser.currentUser.email || null

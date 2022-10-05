@@ -13,6 +13,14 @@ const SavePostDialog = (props) => {
     useEffect(() => {
     }, [post])
 
+    useEffect(() => {
+        if (open) {
+            return
+        }
+
+        formik.resetForm()
+    }, [open])
+
     const submit = async (values) => {
         await onSubmit(values)
         formik.resetForm()
