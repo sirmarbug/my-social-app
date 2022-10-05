@@ -15,7 +15,7 @@ import SavePostDialog from "./dialogs/SavePostDialog";
 import moment from "moment";
 import {removePostApi, updatePost} from "../api/post";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchAllPosts, fetchMyPosts, removePost} from "../store/postsSlice";
+import {fetchAllPosts, fetchMyPosts, likePost, removePost, unlikePost} from "../store/postsSlice";
 import {useLocation} from "react-router-dom";
 import {selectCurrentUser} from "../store/currentUserSlice";
 
@@ -65,6 +65,14 @@ const PostCard = ({ post }) => {
     const initials = `${post.author.firstName.charAt(0)}${post.author.lastName.charAt(0)}`
     const createdAt = moment(post.date).format('DD.MM.YYYY')
 
+    const likeToggleHandle = post => {
+        if (post.like) {
+            dispatch(unlikePost(post._id))
+        } else {
+            dispatch(likePost(post._id))
+        }
+    }
+
     return (
         <Card sx={{ maxWidth: '100%', marginBottom: '3rem' }}>
             <CardHeader
@@ -85,7 +93,7 @@ const PostCard = ({ post }) => {
                 {
                     post.userId === currentUser._id ?
                         <span></span> :
-                        <IconButton aria-label="like">
+                        <IconButton aria-label="like" color={post.like ? 'error' : 'default'} onClick={() => likeToggleHandle(post)}>
                             <FavoriteIcon/>
                         </IconButton>
                 }
