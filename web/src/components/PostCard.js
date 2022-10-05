@@ -14,9 +14,10 @@ import {useState} from "react";
 import SavePostDialog from "./dialogs/SavePostDialog";
 import moment from "moment";
 import {removePostApi, updatePost} from "../api/post";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {fetchAllPosts, fetchMyPosts, removePost} from "../store/postsSlice";
 import {useLocation} from "react-router-dom";
+import {selectCurrentUser} from "../store/currentUserSlice";
 
 const PostCard = ({ post }) => {
     const dispatch = useDispatch()
@@ -58,6 +59,8 @@ const PostCard = ({ post }) => {
         setOpenEditPostDialog(false)
     }
 
+    const currentUser = useSelector(selectCurrentUser)
+
     const author = `${post.author.firstName} ${post.author.lastName}`
     const initials = `${post.author.firstName.charAt(0)}${post.author.lastName.charAt(0)}`
     const createdAt = moment(post.date).format('DD.MM.YYYY')
@@ -79,9 +82,13 @@ const PostCard = ({ post }) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon/>
-                </IconButton>
+                {
+                    post.userId === currentUser._id ?
+                        <span></span> :
+                        <IconButton aria-label="like">
+                            <FavoriteIcon/>
+                        </IconButton>
+                }
                 <div>
                     <IconButton aria-label="edit" onClick={openEditPostDialogHandle}>
                         <EditIcon/>
