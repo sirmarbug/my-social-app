@@ -108,14 +108,17 @@ const PostCard = ({ post }) => {
                             <FavoriteIcon/>
                         </IconButton>
                 }
-                <div>
-                    <IconButton aria-label="edit" onClick={openEditPostDialogHandle}>
-                        <EditIcon/>
-                    </IconButton>
-                    <IconButton aria-label="delete" onClick={openDeleteConfirmDialog}>
-                        <DeleteIcon/>
-                    </IconButton>
-                </div>
+                {
+                    post.userId === currentUser._id &&
+                    <div>
+                        <IconButton aria-label="edit" onClick={openEditPostDialogHandle}>
+                            <EditIcon/>
+                        </IconButton>
+                        <IconButton aria-label="delete" onClick={openDeleteConfirmDialog}>
+                            <DeleteIcon/>
+                        </IconButton>
+                    </div>
+                }
             </CardActions>
             <ConfirmDialog
                 open={deletePostConfirmDialog}
