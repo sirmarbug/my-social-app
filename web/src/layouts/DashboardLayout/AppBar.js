@@ -13,12 +13,13 @@ import {useState} from "react";
 import {useHistory} from "react-router-dom";
 import SavePostDialog from "../../components/dialogs/SavePostDialog";
 import {useDispatch, useSelector} from "react-redux";
-import {selectCurrentUser} from "../../store/currentUserSlice";
+import {resetUser, selectCurrentUser} from "../../store/currentUserSlice";
 import {createPost} from "../../api/post";
-import {addNewPost} from "../../store/postsSlice";
+import {addNewPost, resetItems} from "../../store/postsSlice";
 
 const MyAppBar = () => {
     const history = useHistory()
+    const dispatch = useDispatch()
 
     const [openAddPostDialog, setOpenAddPostDialog] = useState(false)
 
@@ -56,10 +57,11 @@ const MyAppBar = () => {
     }
 
     const logout = () => {
+        localStorage.removeItem('token')
+        dispatch(resetUser())
+        dispatch(resetItems())
         history.push('/')
     }
-
-    const dispatch = useDispatch()
 
     const currentUser = useSelector(selectCurrentUser)
 

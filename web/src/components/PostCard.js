@@ -20,7 +20,6 @@ import {
     fetchMyPosts,
     likePostAction,
     removePost,
-    unlikePost,
     unlikePostAction
 } from "../store/postsSlice";
 import {useLocation} from "react-router-dom";

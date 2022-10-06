@@ -52,24 +52,6 @@ const postsSlice = createSlice({
         removePost: (state, action) => {
             state.list.items = state.list.items.filter(p => p._id !== action.payload)
             state.list.total -= 1
-        },
-        likePost: (state, action) => {
-            const postIndex = state.list.items.findIndex(p => p._id === action.payload)
-
-            if (postIndex === -1) {
-                return
-            }
-
-            state.list.items[postIndex].like = true
-        },
-        unlikePost: (state, action) => {
-            const postIndex = state.list.items.findIndex(p => p._id === action.payload)
-
-            if (postIndex === -1) {
-                return
-            }
-
-            state.list.items[postIndex].like = false
         }
     },
     extraReducers: (builder) => {
@@ -115,7 +97,7 @@ const postsSlice = createSlice({
     }
 })
 
-export const { resetItems, addNewPost, removePost, likePost, unlikePost } = postsSlice.actions
+export const { resetItems, addNewPost, removePost } = postsSlice.actions
 
 export const selectPostsLoading = state => state.posts.loading
 export const selectPosts = state => state.posts.list
