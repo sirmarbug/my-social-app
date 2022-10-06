@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {getMyPosts, getPosts} from "../api/post";
+import {getMyPosts, getPosts, likePostApi, unlikePostApi} from "../api/post";
 
 const initialState = {
     loading: true,
@@ -19,6 +19,22 @@ export const fetchMyPosts = createAsyncThunk(
     async () => {
         const { data } = await getMyPosts()
         return data
+    }
+)
+
+export const likePostAction = createAsyncThunk(
+    'posts/likePostAction',
+    async data => {
+        await likePostApi(data)
+        return data.postId
+    }
+)
+
+export const unlikePostAction = createAsyncThunk(
+    'posts/unlikePostAction',
+    async data => {
+        await unlikePostApi(data)
+        return data.postId
     }
 )
 
@@ -77,6 +93,24 @@ const postsSlice = createSlice({
             })
             .addCase(fetchMyPosts.rejected, state => {
                 state.loading = false
+            })
+            .addCase(likePostAction.fulfilled, (state, action) => {
+                const postIndex = state.list.items.findIndex(p => p._id === action.payload)
+
+                if (postIndex === -1) {
+                    return
+                }
+
+                state.list.items[postIndex].like = true
+            })
+            .addCase(unlikePostAction.fulfilled, (state, action) => {
+                const postIndex = state.list.items.findIndex(p => p._id === action.payload)
+
+                if (postIndex === -1) {
+                    return
+                }
+
+                state.list.items[postIndex].like = false
             })
     }
 })
